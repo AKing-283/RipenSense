@@ -1,0 +1,101 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #d0eee4; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/Users/pushpakreddy/Downloads/productiCODE-main/fruits-falling-realistic-composition/29851.jpg');
+    background-size: cover; 
+    background-position: right; 
+    background-repeat: no-repeat; 
+}
+
+.container {
+    width: 70%;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+    text-align: center;
+}
+
+
+.header {
+    font-size: 2em;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    text-align: left;
+}
+
+.nav {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.nav a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.file-upload {
+    margin-top: 50px;
+    border: 2px dashed #ccc;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+.file-upload label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.file-upload button {
+    background-color: #416b5e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.predict-button {
+    margin-top: 20px;
+    background-color: #416b5e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.icon {
+    margin-top: 30px;
+    font-size: 50px;
+    color: #999;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+
+.footer div {
+    text-align: left;
+}
+
+.footer div h3 {
+    font-weight: normal;
+}

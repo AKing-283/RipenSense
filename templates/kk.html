@@ -1,0 +1,36 @@
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const selectFileButton = document.getElementById('selectFileButton');
+    const predictButton = document.getElementById('predictButton');
+
+    selectFileButton.addEventListener('click', () => {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', (event) => {
+        const files = event.target.files;
+        if (files.length > 0) {
+            const file = files[0];
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const url = `result.html?prediction=${encodeURIComponent(data.prediction)}`;
+                window.location.href = url;
+            })
+            .catch(error => {
+                console.error('Error sending file:', error);
+            });
+        }
+    });
+
+     predictButton.addEventListener('click', () => {
+        
+    });
+</script>

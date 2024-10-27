@@ -1,0 +1,11 @@
+tensorflow
+torch
+numpy
+matplotlib
+pillow
+pandas
+pysimplegui
+scikit-learn
+
+tqdm
+wget

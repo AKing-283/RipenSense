@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RipenSense - Prediction Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #BAF1E4;
+        }
+
+        p{
+            font: size 2em;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            text-transform: uppercase;
+            text-decoration: underline;
+        }
+
+        
+        .nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: #4CAF50;
+        }
+
+        .header {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Georgia', serif;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #333;
+            margin-bottom: 20px;
+            width: 50px; /* Adjust logo size */
+            margin-right: 1100px;
+            margin-left: 1px;
+            position: absolute;
+            top: 12px;
+            right: 20px;
+
+        }
+        /* Main content styling */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 100px; /* Add padding to make room for the fixed navbar */
+            margin-bottom: 50px; /* Add space at the bottom */
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            margin-top: 20px;
+        }
+
+        .result-image {
+            max-width: 300px;
+            margin: 20px auto;
+            border: 2px solid #BAF1E4;
+            border-radius: 8px;
+        }
+
+        .result-section {
+            margin-top: 20px;
+        }
+
+        .result-section p {
+            font-size: 18px;
+            color: #4CAF50;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-link:hover {
+            background-color: #45A049;
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #333;
+            text-align: center; /* Center text in footer */
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+       <a href="{{ url_for('upload_file') }}"> RipenSense </a>
+    </div>
+    <nav class="nav">
+        <a href="{{ url_for('about') }}">About Us</a>
+        <a href="{{url_for('contact')}}">Contact</a>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h2>Prediction Result</h2>
+
+            <div class="result-image">
+                <img src="{{ img_path }}" alt="Uploaded Image" style="width: 100%; border-radius: 8px;">
+            </div>
+            <div class="result-section">
+                <h2>Fruit Classification</h2>
+                <p>Fruit: {{ fruit_class }}</p>
+            </div>
+            <div class="result-section">
+                <h2>Ripeness Classification</h2>
+                <p>Ripeness: {{ ripeness_class }}</p>
+                <h2>Ripeness Percentage Estimation</h2>
+                {% if ripeness_class == 'Ripe' %}
+                    <p>Ripe: {{ ripeness_percentages['Ripe'] }}%</p>
+                {% elif ripeness_class == 'Overipe' %}
+                    <p>Overipe: {{ ripeness_percentages['Overipe'] }}%</p>
+                {% elif ripeness_class == 'Unripe' %}
+                    <p>Unripe: {{ ripeness_percentages['Unripe'] }}%</p>
+                {% endif %}
+                <!--<p>Ripe: {{ ripeness_percentages['Ripe'] }}%</p>
+                <p>Overripe: {{ ripeness_percentages['Overripe'] }}%</p>
+                <p>Unripe: {{ ripeness_percentages['Unripe'] }}%</p>-->
+            </div>
+
+            <a class="back-link" href="/">Upload another image</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 RipenSense. All rights reserved.</p>
+    </footer>
+    
+</body>
+</html>
