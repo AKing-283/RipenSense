@@ -1,5 +1,0 @@
-train: /Users/pushpakreddy/fruit ripening detection/RipenSense/Fruits-and-Vegetables-3/train/labels
-val: /Users/pushpakreddy/fruit ripening detection/RipenSense/Fruits-and-Vegetables-3/valid/labels
-
-nc: 3  
-names: ['ripe', 'unripe', 'overripe']  
