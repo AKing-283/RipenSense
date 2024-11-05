@@ -6,25 +6,16 @@ from PIL import Image
 import io
 from fastai.vision.all import load_learner, PILImage
 import base64
-from inference_sdk import InferenceHTTPClient
+
 
 app = Flask(__name__)
 
-# Load the ripeness model (if you still want to use it) 
+
 ripeness_model = load_model('/Users/pushpakreddy/fruit ripening detection/RipenSense/ripeness.h5')
-# Load the fruit recognition model
+
 fruit_recognition_model = load_learner('/Users/pushpakreddy/fruit ripening detection/RipenSense/fruit_recognizer.pkl')
 
-# Initialize the Inference HTTP Client for live detection
-CLIENT = InferenceHTTPClient(
-    api_url="https://detect.roboflow.com",
-    api_key="Ccw29Pnhy0VLHTeIb3Ul"
-)
 
-# Open camera for live detection
-camera = cv2.VideoCapture(0)
-
-# Preprocess images for the ripeness model
 def preprocess_image(image, target_size):
     image = image.resize(target_size)
     image = np.array(image) / 255.0
@@ -34,12 +25,12 @@ def preprocess_image(image, target_size):
     image = np.expand_dims(image, axis=0)
     return image
 
-# Route to render the homepage and file upload
+
 @app.route('/')
 def upload_file():
     return render_template('upload.html')
 
-# Route to handle image upload and prediction
+
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
@@ -99,61 +90,6 @@ def predict():
     except Exception as e:
         return jsonify({"error": f"Failed to process image: {str(e)}"}), 500
 
-# Predict from camera frames using the Inference API
-def predict_frame(frame):
-    _, buffer = cv2.imencode('.jpg', frame)
-    image_data = base64.b64encode(buffer).decode('utf-8')
-    
-    # Perform inference using the InferenceHTTPClient
-    result = CLIENT.infer(image_data, model_id="fruit-ripeness-detection-zzkqi/1")
-    
-    # Process the inference results
-    predictions = []
-    for prediction in result['predictions']:
-        x1 = int(prediction['x'] - prediction['width'] / 2)
-        y1 = int(prediction['y'] - prediction['height'] / 2)
-        x2 = int(prediction['x'] + prediction['width'] / 2)
-        y2 = int(prediction['y'] + prediction['height'] / 2)
-        label = prediction['class']
-        confidence = prediction['confidence']
-        
-        predictions.append({
-            'x1': x1,
-            'y1': y1,
-            'x2': x2,
-            'y2': y2,
-            'label': label,
-            'confidence': confidence
-        })
-    
-    return predictions
-
-# Generate camera frames for live detection
-def generate_frames():
-    while True:
-        success, frame = camera.read()
-        if not success:
-            break
-        else:
-            # Get predictions for the current frame
-            predictions = predict_frame(frame)
-
-            # Draw predictions on the frame
-            for pred in predictions:
-                cv2.rectangle(frame, (pred['x1'], pred['y1']), (pred['x2'], pred['y2']), (0, 255, 0), 2)
-                cv2.putText(frame, f"{pred['label']} {pred['confidence']:.2f}", 
-                            (pred['x1'], pred['y1'] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
-            ret, buffer = cv2.imencode('.jpg', frame)
-            frame = buffer.tobytes()
-            
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-# Route for video feed
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 # About and contact pages
 @app.route('/about')
