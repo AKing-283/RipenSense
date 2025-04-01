@@ -5,14 +5,15 @@ from PIL import Image
 import io
 from fastai.vision.all import load_learner, PILImage
 import base64
-
+import os
 
 app = Flask(__name__)
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-ripeness_model = load_model('/Users/pushpakreddy/fruit ripening detection/RipenSense/ripeness.h5')
+ripeness_model = load_model(os.path.join(BASE_DIR, "ripeness.h5"))
+fruit_recognition_model = load_learner(os.path.join(BASE_DIR, "fruit_recognizer.pkl"))
 
-fruit_recognition_model = load_learner('/Users/pushpakreddy/fruit ripening detection/RipenSense/fruit_recognizer.pkl')
 
 
 def preprocess_image(image, target_size):
