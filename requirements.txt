@@ -1,5 +1,4 @@
-tensorflow==2.16.2
-torch
+tensorflow
 numpy
 matplotlib
 pillow
@@ -9,3 +8,4 @@ scikit-learn
 gunicorn
 tqdm
 wget
+flask
