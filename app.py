@@ -1,4 +1,3 @@
-import cv2
 from flask import Flask, request, jsonify, render_template, Response
 import numpy as np
 from tensorflow.keras.models import load_model
