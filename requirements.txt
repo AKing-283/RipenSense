@@ -1,4 +1,4 @@
-tensorflow
+tensorflow-cpu
 numpy
 matplotlib
 pillow
@@ -8,4 +8,5 @@ scikit-learn
 gunicorn
 tqdm
 wget
-flask
+Flask
+fastai
