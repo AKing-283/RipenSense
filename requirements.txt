@@ -6,6 +6,6 @@ pillow
 pandas
 pysimplegui
 scikit-learn
-
+gunicorn
 tqdm
 wget
